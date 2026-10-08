@@ -1,5 +1,6 @@
 from picamera2 import Picamera2
 from PiCameraManager.CameraManager import CameraManager
+from PersonRecognition.PersonRecognition import PersonRecognition
 import time
 
 def main_loop(camera_manager1,camera_manager2):
@@ -13,6 +14,8 @@ def main_loop(camera_manager1,camera_manager2):
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
+
+Person_Recognition = PersonRecognition()
 
 print("Camera_1 start")
 Camera_1.start()
