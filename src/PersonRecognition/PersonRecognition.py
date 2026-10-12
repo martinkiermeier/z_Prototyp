@@ -24,6 +24,8 @@ class PersonRecognition:
         self.model.load_state_dict(ckpt["model"])
         
         self.model.eval()
+        print("Modell bereit")
+
     def resize_picture_for_YOLOX_recognition(self,image):
         # ---------------------------------
         # Bild laden
@@ -68,7 +70,7 @@ class PersonRecognition:
         img = torch.from_numpy(small).float()
         img = img.permute(2, 0, 1)
         img = img.unsqueeze(0)
-        print("Modell bereit")
+
         return img, scale, pad_x, pad_y
         
     def person_recognition(self, img, scale, pad_x, pad_y):
@@ -143,7 +145,7 @@ class PersonRecognition:
              
             image[y1:y2, x1:x2] = pixelated
          
-         return image
+        return image
 
     def draw_person_frame(self, image, x1, y1, x2, y2):
             cv2.rectangle(
