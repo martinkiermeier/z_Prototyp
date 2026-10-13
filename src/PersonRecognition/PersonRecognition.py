@@ -73,7 +73,7 @@ class PersonRecognition:
 
         return img, scale, pad_x, pad_y
         
-    def person_recognition(self, img, scale, pad_x, pad_y):
+    def detect_person(self, img, scale, pad_x, pad_y):
         
         persons = []
         
