@@ -1,12 +1,13 @@
 from picamera2 import Picamera2
 from PiCameraManager.CameraManager import CameraManager
 from PersonRecognition.PersonRecognition import PersonRecognition
+from LicensePlate.LicensePlateRecognition.LicensePlateRecognition import LicensePlateRecognition
 import time
 
 def main_loop(camera_manager1,camera_manager2,person_recognition):
     while True:
         ###################################################################
-        #Camera logic
+        #Camera
         ###################################################################
         frame_c = None
         LIDARSIGNAL = input("1 für LIDAR1; 2 für LIDAR2: ")#multithreading?
@@ -18,7 +19,20 @@ def main_loop(camera_manager1,camera_manager2,person_recognition):
             print("LIDAR signal not recognized")
             continue
         ###################################################################
-        #Person recognition logic
+        #License Plate recognition
+        ###################################################################
+        plate_crops = []
+        plates = LicensePlateRecognition.detect_plates(frame_c)
+        for plate in plates:
+            x1, y1, x2, y2 = plate
+            plate_crops.append(license_plate_recognition.crop_plate(frame_c,x1,y1,x2,y2))
+            frame_c = license_plate_recognition.draw_plate_frame()
+        ###################################################################
+        #OCR License Plate recognition
+        ###################################################################
+
+        ###################################################################
+        #Person recognition
         ###################################################################
         img, scale, pad_x, pad_y = person_recognition.resize_picture_for_YOLOX_recognition(frame_c)
         persons = person_recognition.person_recognition(img, scale, pad_x, pad_y)
@@ -29,7 +43,7 @@ def main_loop(camera_manager1,camera_manager2,person_recognition):
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
-
+license_plate_recognition = LicensePlateRecognition()
 person_recognition = PersonRecognition()
 
 print("Camera_1 start")

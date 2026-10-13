@@ -6,9 +6,9 @@ from yolox.utils import postprocess
 
 class PersonRecognition:
     def __init__(self):
-        # ---------------------------------
-        # YOLOX laden
-        # ---------------------------------
+        # ###################################################################
+        # load YOLOX
+        # ###################################################################
         exp = get_exp(
             "/home/user/Sensor_Test_Rep/YOLOX/exps/default/yolox_nano.py",#change later
             None
@@ -24,7 +24,7 @@ class PersonRecognition:
         self.model.load_state_dict(ckpt["model"])
         
         self.model.eval()
-        print("Modell bereit")
+        print("model ready")
 
     def resize_picture_for_YOLOX_recognition(self,image):
         # ---------------------------------
@@ -88,12 +88,12 @@ class PersonRecognition:
         )
 
         if outputs[0] is None:
-            print("Keine Objekte gefunden")
+            print("no object detected")
             return[]
     
-        # ---------------------------------
-        # Personen erkennen
-        # ---------------------------------
+        ###################################################################
+        # person recognition
+        ###################################################################
         detections = outputs[0]
         for det in detections:
             cls = int(det[6])
@@ -108,7 +108,7 @@ class PersonRecognition:
             y2 = int((det[3] - pad_y) / scale)
             persons.append((x1, y1, x2, y2))
             print(
-                "Person gefunden:",
+                "person detected:",
                 x1,
                 y1,
                 x2,

@@ -23,12 +23,7 @@ class LicensePlateRecognition:
         img_input = (torch.from_numpy(img_input).unsqueeze(0).float())
         with torch.no_grad():
             outputs = self.model(img_input)
-            outputs = postprocess(
-                outputs,
-                self.exp.num_classes,
-                conf_thre=0.25,
-                nms_thre=0.45,
-                class_agnostic=True)
+            outputs = postprocess(outputs,self.exp.num_classes,conf_thre=0.25,nms_thre=0.45,class_agnostic=True)
         if outputs[0] is None:
             return []
         output = outputs[0]
