@@ -2,7 +2,7 @@ import serial
 import time
 
 
-class LidarManager:
+class LIDAR_Manager:
 
     CMD_LASER_ON = bytes([0xCD, 0x01, 0x03, 0x04])
     CMD_LASER_OFF = bytes([0xCD, 0x01, 0x04, 0x05])
@@ -21,34 +21,34 @@ class LidarManager:
         self.ser.write(self.CMD_LASER_ON)
         print(f"Lidar started: {self.serial_port}")
 
-def stop(self):
-    if self.ser is not None:
-        self.ser.write(self.CMD_LASER_OFF)
-        self.ser.close()
-        print(f"Lidar gestoppt: {self.serial_port}")
-def read_distance(self):
-    time.sleep(1)
-    self.ser.reset_input_buffer()
-    self.ser.write(self.CMD_MEASURE_B)
-    time.sleep(1)
-    if self.ser.in_waiting <= 0:
-        return None
-    raw_data = self.ser.read(self.ser.in_waiting)
-    if len(raw_data) < 8:
-        return None
-    header = raw_data[0]
-    if header != 0xFA:
-        return None
-    expected_checksum = (sum(raw_data[1:7]) & 0xFF)
-    received_checksum = raw_data[7]
-    if expected_checksum != received_checksum:
-        return None
-    distance_low = raw_data[3]
-    distance_high = raw_data[4]
-    distance_mm = (distance_high << 8) | distance_low
-    return distance_mm
-def vehicle_present(self):
-    distance = self.read_distance()
-    if distance is None:
-        return False
-    return distance < self.trigger_distance
+    def stop(self):
+        if self.ser is not None:
+            self.ser.write(self.CMD_LASER_OFF)
+            self.ser.close()
+            print(f"Lidar stopped: {self.serial_port}")
+    def read_distance(self):
+        time.sleep(1)
+        self.ser.reset_input_buffer()
+        self.ser.write(self.CMD_MEASURE_B)
+        time.sleep(1)
+        if self.ser.in_waiting <= 0:
+            return None
+        raw_data = self.ser.read(self.ser.in_waiting)
+        if len(raw_data) < 8:
+            return None
+        header = raw_data[0]
+        if header != 0xFA:
+            return None
+        expected_checksum = (sum(raw_data[1:7]) & 0xFF)
+        received_checksum = raw_data[7]
+        if expected_checksum != received_checksum:
+            return None
+        distance_low = raw_data[3]
+        distance_high = raw_data[4]
+        distance_mm = (distance_high << 8) | distance_low
+        return distance_mm
+    def vehicle_present(self):
+        distance = self.read_distance()
+        if distance is None:
+            return False
+        return distance < self.trigger_distance

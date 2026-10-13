@@ -3,21 +3,21 @@ from PiCameraManager.CameraManager import CameraManager
 from PersonRecognition.PersonRecognition import PersonRecognition
 from LicensePlate.LicensePlateRecognition.LicensePlateRecognition import LicensePlateRecognition
 from LicensePlate.LicensePlateOCR.LicensePlateOCR import LicensePlateOCR
+from LIDAR_Manager import LIDAR_Manager
 import time
 
-def main_loop(camera_manager1,camera_manager2,person_recognition):
+def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_2):
     while True:
         ###################################################################
         #Camera
         ###################################################################
         frame_c = None
-        LIDARSIGNAL = input("1 für LIDAR1; 2 für LIDAR2: ")#multithreading?
-        if LIDARSIGNAL=="1":
-            frame_c =camera_manager1.capture_frame()
-        elif LIDARSIGNAL=="2":
+        #multithreading?
+        if lidar_1.vehicle_present():
+            frame_c = camera_manager1.capture_frame()
+        elif lidar_2.vehicle_present():
             frame_c = camera_manager2.capture_frame()
         else:
-            print("LIDAR signal not recognized")
             continue
         ###################################################################
         #License Plate recognition
@@ -42,6 +42,8 @@ def main_loop(camera_manager1,camera_manager2,person_recognition):
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
+LIDAR_1 = LIDAR_Manager(0)
+LIDAR_2 = LIDAR_Manager(1)
 license_plate_recognition = LicensePlateRecognition()
 person_recognition = PersonRecognition()
 license_plate_ocr = LicensePlateOCR()
@@ -50,8 +52,11 @@ print("Camera_1 start")
 Camera_1.start()
 print("Camera_2 start")
 Camera_2.start()
-
-main_loop(Camera_1, Camera_2, person_recognition)
+print("LIDAR_1 start")
+LIDAR_1.start()
+print("LIDAR_2 start")
+LIDAR_2.start()
+main_loop(Camera_1, Camera_2, person_recognition, LIDAR_1, LIDAR_2)
 
 Camera_1.stop()
 Camera_2.stop()
