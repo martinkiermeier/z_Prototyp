@@ -5,7 +5,7 @@ from LicensePlate.LicensePlateRecognition.LicensePlateRecognition import License
 from LicensePlate.LicensePlateOCR.LicensePlateOCR import LicensePlateOCR
 from LIDAR_Manager import LIDAR_Manager
 import time
-
+def threads():
 def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_2):
     while True:
         ################################################################### /change to multiple photos
