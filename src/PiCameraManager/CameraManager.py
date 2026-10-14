@@ -21,7 +21,11 @@ class CameraManager:
         print("picam2 closed")
     def capture_frame(self):
         print("capture frame")
-        frame = self.picam2.capture_array()
+        try:
+            frame = self.picam2.capture_array()
+        except Exception as e:
+            print(f"Camera Error: {e}")
+            return None
         return frame
     def capture_and_save_frame(self):
         self.picam2.capture_file("foto.jpg")

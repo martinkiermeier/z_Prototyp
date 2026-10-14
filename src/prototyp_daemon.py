@@ -5,20 +5,31 @@ from LicensePlate.LicensePlateRecognition.LicensePlateRecognition import License
 from LicensePlate.LicensePlateOCR.LicensePlateOCR import LicensePlateOCR
 from LIDAR_Manager import LIDAR_Manager
 import time
+import threading
+
 def threads():
-def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_2):
+    thread_1 = threading.Thread(target=main_loop, args=(Camera_1,person_recognition,LIDAR_1))
+    thread_2 = threading.Thread(target=main_loop, args=(Camera_2, person_recognition, LIDAR_2))
+    thread_1.start()
+    thread_2.start()
+    thread_1.join()
+    thread_2.join()
+
+def main_loop(camera_manager,person_recognition,lidar):
     while True:
         ################################################################### /change to multiple photos
         #LIDAR + Camera (waits for LIDAR signal and captures frame)
-        ###################################################################
+        ###################################################################/add exceptions
         frame_c = None
-        #multithreading?
-        if lidar_1.vehicle_present():
-            frame_c = camera_manager1.capture_frame()
-        elif lidar_2.vehicle_present():
-            frame_c = camera_manager2.capture_frame()
-        else:
-            continue
+        try:
+            if lidar.vehicle_present():
+                frame_c = camera_manager.capture_frame()
+            else:
+                time.sleep(0.1)
+                continue
+        except Exception as e:
+            print(f"Worker Error: {e}")
+            time.sleep(1)
         ###################################################################
         #License Plate recognition
         ###################################################################
@@ -45,8 +56,8 @@ def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
-LIDAR_1 = LIDAR_Manager(0)
-LIDAR_2 = LIDAR_Manager(1)
+LIDAR_1 = LIDAR_Manager("/dev/ttyUSB0")
+LIDAR_2 = LIDAR_Manager("/dev/ttyUSB1")
 license_plate_recognition = LicensePlateRecognition()
 person_recognition = PersonRecognition()
 license_plate_ocr = LicensePlateOCR()
@@ -61,8 +72,7 @@ print("LIDAR_2 start")
 LIDAR_2.start()
 LIDAR_1.calibrate()
 LIDAR_2.calibrate()
-main_loop(Camera_1, Camera_2, person_recognition, LIDAR_1, LIDAR_2)
-
+threads()
 Camera_1.stop()
 Camera_2.stop()
 Camera_1.close()

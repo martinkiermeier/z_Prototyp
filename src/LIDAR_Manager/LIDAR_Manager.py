@@ -41,26 +41,32 @@ class LIDAR_Manager:
             self.ser.close()
             print(f"Lidar stopped: {self.serial_port}")
     def read_distance(self):
-        time.sleep(1)
-        self.ser.reset_input_buffer()
-        self.ser.write(self.CMD_MEASURE_B)
-        time.sleep(1)
-        if self.ser.in_waiting <= 0:
-            return None
-        raw_data = self.ser.read(self.ser.in_waiting)
-        if len(raw_data) < 8:
-            return None
-        header = raw_data[0]
-        if header != 0xFA:
-            return None
-        expected_checksum = (sum(raw_data[1:7]) & 0xFF)
-        received_checksum = raw_data[7]
-        if expected_checksum != received_checksum:
-            return None
-        distance_low = raw_data[3]
-        distance_high = raw_data[4]
-        distance_mm = (distance_high << 8) | distance_low
-        return distance_mm
+        try:
+            time.sleep(1)
+            self.ser.reset_input_buffer()
+            self.ser.write(self.CMD_MEASURE_B)
+            time.sleep(1)
+            if self.ser.in_waiting <= 0:
+                return None
+            raw_data = self.ser.read(self.ser.in_waiting)
+            if len(raw_data) < 8:
+                return None
+            header = raw_data[0]
+            if header != 0xFA:
+                return None
+            expected_checksum = (sum(raw_data[1:7]) & 0xFF)
+            received_checksum = raw_data[7]
+            if expected_checksum != received_checksum:
+                return None
+            distance_low = raw_data[3]
+            distance_high = raw_data[4]
+            distance_mm = (distance_high << 8) | distance_low
+            return distance_mm
+
+        except Exception as e:
+            print(f"Lidar Error: {e}")
+
+        return None
     def vehicle_present(self):
         distance = self.read_distance()
         if distance is None:
