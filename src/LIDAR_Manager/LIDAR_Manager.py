@@ -67,8 +67,20 @@ class LIDAR_Manager:
             print(f"Lidar Error: {e}")
 
         return None
+
     def vehicle_present(self):
         distance = self.read_distance()
         if distance is None:
             return False
         return distance < self.trigger_distance
+
+    def lidar_stability_test(self,samples=5,tolerance=30):
+        values = []
+        for _ in range(samples):
+            distance = self.read_distance()
+            if distance is not None:
+                values.append(distance)
+            time.sleep(1)
+        if len(values) < samples:
+            return False
+        return (max(values)- min(values)) <= tolerance

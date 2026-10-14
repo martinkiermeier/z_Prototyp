@@ -51,8 +51,20 @@ def main_loop(camera_manager,person_recognition,lidar):
             frame_c = person_recognition.pixelate_person(frame_c,x1,y1,x2,y2)
             frame_c = person_recognition.draw_person_frame(frame_c,x1,y1,x2,y2)
         ###################################################################
-        #
+        #save images...
         ###################################################################
+
+        ###################################################################
+        #wait if they charge or the LIDAR is reset
+        ###################################################################
+        for x in range (40):
+            time.sleep(15)
+            #test if charging started
+            #test if LIDAR still active
+                #has the LIDAR distance changed? Is it still the same plate?
+
+        #if not charging: fine
+
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
