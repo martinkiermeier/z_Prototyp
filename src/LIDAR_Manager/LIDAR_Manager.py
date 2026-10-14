@@ -14,6 +14,20 @@ class LIDAR_Manager:
         self.trigger_distance = trigger_distance
         self.ser = None
 
+    def calibrate(self, samples=11, error_in_mm=300):
+        values = []
+        for _ in range(samples):
+            distance = self.read_distance()
+            if distance is not None:
+                values.append(distance)
+            if len(values) < 3:
+                print("not enough values")
+                return False
+            values.sort()
+            self.trigger_distance = values[len(values) // 2] - error_in_mm
+            print("trigger distance:",self.trigger_distance,"mm")
+            return True
+
     def start(self):
         self.ser = serial.Serial(self.serial_port,self.baud_rate,timeout=1)
         time.sleep(1)

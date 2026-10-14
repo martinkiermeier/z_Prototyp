@@ -8,8 +8,8 @@ import time
 
 def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_2):
     while True:
-        ###################################################################
-        #Camera
+        ################################################################### /change to multiple fotos
+        #LIDAR + Camera (waits for LIDAR signal and captures frame)
         ###################################################################
         frame_c = None
         #multithreading?
@@ -39,11 +39,16 @@ def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_
             x1, y1, x2, y2 = person
             frame_c = person_recognition.pixelate_person(frame_c,x1,y1,x2,y2)
             frame_c = person_recognition.draw_person_frame(frame_c,x1,y1,x2,y2)
+        ###################################################################
+        #
+        ###################################################################
 
 Camera_1 = CameraManager(0)
 Camera_2 = CameraManager(1)
 LIDAR_1 = LIDAR_Manager(0)
 LIDAR_2 = LIDAR_Manager(1)
+LIDAR_1.calibrate()
+LIDAR_2.calibrate()
 license_plate_recognition = LicensePlateRecognition()
 person_recognition = PersonRecognition()
 license_plate_ocr = LicensePlateOCR()
