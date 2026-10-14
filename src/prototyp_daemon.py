@@ -8,7 +8,7 @@ import time
 
 def main_loop(camera_manager1,camera_manager2,person_recognition, lidar_1,lidar_2):
     while True:
-        ################################################################### /change to multiple fotos
+        ################################################################### /change to multiple photos
         #LIDAR + Camera (waits for LIDAR signal and captures frame)
         ###################################################################
         frame_c = None
