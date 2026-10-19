@@ -3,7 +3,7 @@ from PiCameraManager.CameraManager import CameraManager
 from PersonRecognition.PersonRecognition import PersonRecognition
 from LicensePlate.LicensePlateRecognition.LicensePlateRecognition import LicensePlateRecognition
 from LicensePlate.LicensePlateOCR.LicensePlateOCR import LicensePlateOCR
-from LIDAR_Manager import LIDAR_Manager
+from LIDAR_Manager.LIDAR_Manager import LIDAR_Manager
 import time
 import threading
 

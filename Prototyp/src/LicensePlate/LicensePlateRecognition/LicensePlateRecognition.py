@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/home/user/z_Prototyp/src/YOLOX")
 import torch
 import cv2
 from yolox.exp import get_exp
@@ -6,9 +8,9 @@ from yolox.utils import postprocess
 
 class LicensePlateRecognition:
     def __init__(self):
-        self.exp = get_exp("/home/user/Sensor_Test_Rep/YOLOX/exps/default/yolox_s.py")#change later
+        self.exp = get_exp("/home/user/z_Prototyp/src/YOLOX/exps/default/yolox_s.py")#change later
         self.model = self.exp.get_model()
-        ckpt = torch.load("/home/user/Sensor_Test_Rep/models/latest_ckpt.pth",map_location="cpu",weights_only=False)#change later
+        ckpt = torch.load("/home/user/z_Prototyp/models/latest_ckpt.pth",map_location="cpu",weights_only=False)#change later
         self.model.load_state_dict(ckpt["model"])
         self.model.eval()
 

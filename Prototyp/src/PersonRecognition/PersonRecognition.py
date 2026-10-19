@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/home/user/z_Prototyp/src/YOLOX")
 import torch
 import cv2
 import numpy as np
@@ -10,14 +12,14 @@ class PersonRecognition:
         # load YOLOX
         # ###################################################################
         exp = get_exp(
-            "/home/user/Sensor_Test_Rep/YOLOX/exps/default/yolox_nano.py",#change later
+            "/home/user/z_Prototyp/src/YOLOX/exps/default/yolox_nano.py",#change later
             None
         )
         
         self.model = exp.get_model()
         
         ckpt = torch.load(
-            "/home/user/Sensor_Test_Rep/models/yolox_nano.pth",#change later
+            "/home/user/z_Prototyp/models/yolox_nano.pth",#change later
             map_location="cpu"
         )
         
