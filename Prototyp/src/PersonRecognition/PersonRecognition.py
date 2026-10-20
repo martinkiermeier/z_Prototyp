@@ -1,25 +1,31 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))#"/home/user/z_Prototyp/Prototyp/src
 import sys
-sys.path.append("/home/user/z_Prototyp/src/YOLOX")
+
+sys.path.append(os.path.join(BASE_DIR,"YOLOX"))
 import torch
 import cv2
 import numpy as np
 from yolox.exp import get_exp
 from yolox.utils import postprocess
 
+
+
 class PersonRecognition:
     def __init__(self):
+        
         # ###################################################################
         # load YOLOX
         # ###################################################################
         exp = get_exp(
-            "/home/user/z_Prototyp/src/YOLOX/exps/default/yolox_nano.py",#change later
-            None
+            os.path.join(BASE_DIR,"YOLOX", "exps","default","yolox_nano.py"#change later
+            ),None
         )
         
         self.model = exp.get_model()
         
         ckpt = torch.load(
-            "/home/user/z_Prototyp/models/yolox_nano.pth",#change later
+            os.path.join(BASE_DIR,"..","models","yolox_nano.pth"),#change later
             map_location="cpu"
         )
         

@@ -1,5 +1,7 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))#"/home/user/z_Prototyp/Prototyp/src/
 import sys
-sys.path.append("/home/user/z_Prototyp/src/YOLOX")
+#sys.path.append("/home/user/z_Prototyp/src/YOLOX")
 import torch
 import cv2
 from yolox.exp import get_exp
@@ -8,9 +10,18 @@ from yolox.utils import postprocess
 
 class LicensePlateRecognition:
     def __init__(self):
-        self.exp = get_exp("/home/user/z_Prototyp/src/YOLOX/exps/default/yolox_s.py")#change later
+        #self.exp = get_exp("/home/user/z_Prototyp/src/YOLOX/exps/default/yolox_s.py")#change later
+        self.exp = get_exp(
+            os.path.join(BASE_DIR,"YOLOX", "exps","default","yolox_s.py"#change later
+            ),None
+        )
+        self.exp.num_classes = 3
         self.model = self.exp.get_model()
-        ckpt = torch.load("/home/user/z_Prototyp/models/latest_ckpt.pth",map_location="cpu",weights_only=False)#change later
+        #ckpt = torch.load("/home/user/z_Prototyp/models/latest_ckpt.pth",map_location="cpu",weights_only=False)#change later
+        ckpt = torch.load(
+            os.path.join(BASE_DIR,"..","models","latest_ckpt.pth"),#change later
+            map_location="cpu",weights_only=False
+        )
         self.model.load_state_dict(ckpt["model"])
         self.model.eval()
 
