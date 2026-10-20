@@ -41,6 +41,6 @@ pip install -r requirements.txt
 # Run
 
 Install all dependencies using:
-
+```
 pip install -r requirements.txt
-
+```
