@@ -11,3 +11,8 @@ Prototyp/
 └── models/
     ├── yolox_nano.pth
     └── latest_ckpt.pth
+required models:
+models/latest_ckpt.pth
+→ license plate recognition
+models/yolox_nano.pth
+→ person recognition
