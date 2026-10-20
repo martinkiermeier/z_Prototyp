@@ -1,5 +1,5 @@
+Project Structure
 
-project structure:
 Prototyp/
 ├── src/
 │   ├── PiCameraManager/
@@ -12,12 +12,21 @@ Prototyp/
     ├── yolox_nano.pth
     └── latest_ckpt.pth
 
-    
-required models:
-models/latest_ckpt.pth
-→ license plate recognition
-models/yolox_nano.pth
-→ person recognition
+Required Models
 
-complete freeze of venv during develpment:
-requirement.txt
+models/latest_ckpt.pth
+→ License Plate Recognition
+
+models/yolox_nano.pth
+→ Person Recognition
+
+Python Environment
+
+A complete freeze of the development virtual environment can be found in:
+
+requirements.txt
+
+Install all dependencies using:
+
+pip install -r requirements.txt
+
