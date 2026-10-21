@@ -35,12 +35,5 @@ requirements.txt
 Install dependencies using:
  
 ```bash
-pip install -r requirements.txt
-```
- 
-# Run
-
-Install all dependencies using:
-```
-pip install -r requirements.txt
+pip install -r requirements_min.txt
 ```
