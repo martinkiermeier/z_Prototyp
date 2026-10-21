@@ -1,23 +1,46 @@
-
-project structure:
+# Project Structure
+ 
+```text
 Prototyp/
 ├── src/
-│   ├── PiCameraManager/
-│   ├── PersonRecognition/
-│   ├── LicensePlate/
-│   ├── LIDAR_Manager/
-│   └── prototyp_daemon.py
+│ ├── PiCameraManager/
+│ ├── PersonRecognition/
+│ ├── LicensePlate/
+│ ├── LIDAR_Manager/
+│ └── prototyp_daemon.py
 │
 └── models/
-    ├── yolox_nano.pth
-    └── latest_ckpt.pth
-
-    
-required models:
+├── yolox_nano.pth
+└── latest_ckpt.pth
+```
+ 
+# Required Models
+ 
+```text
 models/latest_ckpt.pth
-→ license plate recognition
+→ License Plate Recognition
+ 
 models/yolox_nano.pth
-→ person recognition
+→ Person Recognition
+```
+ 
+# Python Environment
+ 
+A complete freeze of the development environment can be found in:
+ 
+```text
+requirements.txt
+```
+ 
+Install dependencies using:
+ 
+```bash
+pip install -r requirements.txt
+```
+ 
+# Run
 
-complete freeze of venv during develpment:
-requirement.txt
+Install all dependencies using:
+```
+pip install -r requirements.txt
+```
