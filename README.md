@@ -37,3 +37,13 @@ Install dependencies using:
 ```bash
 pip install -r requirements_min.txt
 ```
+# YOLOX
+```
+Clone YOLOX into:
+Prototyp/src/
+
+cd Prototyp/src
+
+git clone https://github.com/Megvii-BaseDetection/YOLOX.git
+```
+
